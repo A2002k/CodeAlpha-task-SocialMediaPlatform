@@ -1,0 +1,209 @@
+/* Stories Container */
+
+.stories-bar {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.stories-bar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Story Card */
+
+.story-card {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+
+  min-width: 76px;
+
+  transition: .25s;
+}
+
+.story-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Story Ring */
+
+.story-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  padding: 3px;
+
+  background: linear-gradient(
+    135deg,
+    #f58529,
+    #feda77,
+    #dd2a7b,
+    #8134af,
+    #515bd4
+  );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  overflow: hidden;
+}
+
+/* Inner Circle */
+
+.story-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+
+  border: 3px solid white;
+}
+
+/* Letter Avatar */
+
+.story-avatar:not(:has(img)) {
+  color: white;
+  font-size: 23px;
+  font-weight: 900;
+}
+
+/* Add Story */
+
+.add-story .story-avatar {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
+
+.add-story .story-avatar::after {
+  content: "+";
+  font-size: 30px;
+  font-weight: 900;
+}
+
+/* Username */
+
+.story-card span {
+  max-width: 72px;
+
+  font-size: 12px;
+  font-weight: 700;
+  color: #334155;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Desktop */
+
+@media (min-width: 1200px) {
+
+  .story-avatar {
+    width: 72px;
+    height: 72px;
+  }
+
+  .story-card span {
+    font-size: 13px;
+  }
+
+}
+
+/* Tablet */
+
+@media (max-width: 900px) {
+
+  .stories-bar {
+    padding: 14px;
+    gap: 14px;
+  }
+
+  .story-avatar {
+    width: 62px;
+    height: 62px;
+  }
+
+  .story-card {
+    min-width: 68px;
+  }
+
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .stories-bar {
+
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+
+    padding: 10px 12px;
+    gap: 12px;
+
+    margin-bottom: 18px;
+
+    box-shadow: none;
+  }
+
+  .story-avatar {
+    width: 58px;
+    height: 58px;
+    padding: 2.5px;
+  }
+
+  .story-avatar img {
+    border-width: 2px;
+  }
+
+  .story-card {
+    min-width: 62px;
+    gap: 6px;
+  }
+
+  .story-card span {
+    font-size: 11px;
+    max-width: 58px;
+  }
+
+}
+
+/* Small Phones */
+
+@media (max-width: 390px) {
+
+  .stories-bar {
+    gap: 10px;
+    padding: 8px 10px;
+  }
+
+  .story-avatar {
+    width: 52px;
+    height: 52px;
+  }
+
+  .story-card span {
+    font-size: 10px;
+    max-width: 50px;
+  }
+
+}

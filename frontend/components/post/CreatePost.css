@@ -1,0 +1,120 @@
+.create-post {
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(14px);
+  padding: 24px;
+  border-radius: 26px;
+  box-shadow: 0 15px 40px rgba(15,23,42,.07);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 26px;
+}
+
+.create-post textarea {
+  width: 100%;
+  min-height: 105px;
+  border: none;
+  background: #f8fafc;
+  border-radius: 20px;
+  padding: 16px;
+  resize: vertical;
+  outline: none;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.create-post textarea:focus {
+  box-shadow: 0 0 0 4px rgba(37,99,235,.12);
+}
+
+.post-preview {
+  width: 100%;
+  max-height: 430px;
+  object-fit: cover;
+  border-radius: 22px;
+  margin-top: 16px;
+  box-shadow: 0 10px 25px rgba(15,23,42,.12);
+}
+
+.create-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.upload-label {
+  background: #f1f5f9;
+  color: #0f172a;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.upload-label:hover {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.upload-label input {
+  display: none;
+}
+
+.create-actions button {
+  border: none;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.create-actions button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(37,99,235,.28);
+}
+
+.create-actions button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.preview-wrapper {
+  position: relative;
+}
+
+.edit-image-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: rgba(15, 23, 42, 0.85);
+  color: white;
+  padding: 9px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.tagged-summary {
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 600px) {
+  .create-actions {
+    flex-direction: column;
+  }
+
+  .upload-label,
+  .create-actions button {
+    width: 100%;
+    text-align: center;
+  }
+}

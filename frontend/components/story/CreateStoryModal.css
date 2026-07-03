@@ -1,0 +1,75 @@
+.story-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(6px);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.story-modal {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  border-radius: 24px;
+  padding: 20px;
+}
+
+.story-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.story-modal-header h2 {
+  margin: 0;
+}
+
+.story-modal-header button {
+  border: none;
+  background: #f1f5f9;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.story-preview {
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  border-radius: 18px;
+  margin-bottom: 15px;
+}
+
+.story-upload-btn,
+.story-share-btn {
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  display: block;
+  text-align: center;
+}
+
+.story-upload-btn {
+  background: #f1f5f9;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.story-upload-btn input {
+  display: none;
+}
+
+.story-share-btn {
+  background: #2563eb;
+  color: white;
+}

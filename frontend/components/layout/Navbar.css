@@ -1,0 +1,250 @@
+.navbar {
+  height: 72px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  padding: 0 38px;
+  display: grid;
+  grid-template-columns: 230px 1fr auto;
+  align-items: center;
+  gap: 24px;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.nav-logo {
+  font-size: 24px;
+  font-weight: 900;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.nav-search {
+  max-width: 440px;
+  width: 100%;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #64748b;
+  transition: all 0.25s ease;
+}
+
+.nav-search:hover {
+  background: #e2e8f0;
+}
+
+.nav-search input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 15px;
+  color: #0f172a;
+  cursor: pointer;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-actions button,
+.nav-icon-btn {
+  border: none;
+  background: #f1f5f9;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0f172a;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.nav-actions button:hover,
+.nav-icon-btn:hover {
+  background: #dbeafe;
+  color: #2563eb;
+  transform: translateY(-2px);
+}
+
+.notification-bell {
+  position: relative;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #ef4444;
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: badgePop 0.3s ease;
+}
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #0f172a;
+  font-weight: 700;
+  transition: all 0.25s ease;
+}
+
+.nav-user:hover {
+  color: #2563eb;
+}
+
+.nav-user:hover .nav-avatar {
+  transform: scale(1.08);
+}
+
+.nav-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563eb, #9333ea);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  overflow: hidden;
+  transition: transform 0.25s ease;
+  border: 2px solid #eef2ff;
+}
+
+.nav-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.logout-btn {
+  width: auto !important;
+  height: 42px !important;
+  border-radius: 999px !important;
+  padding: 0 16px !important;
+  background: #ef4444 !important;
+  color: white;
+  font-weight: 600;
+  gap: 8px;
+}
+
+.logout-btn:hover {
+  background: #dc2626 !important;
+}
+
+@keyframes badgePop {
+  0% { transform: scale(0); }
+  80% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .navbar {
+    grid-template-columns: 1fr auto;
+    padding: 0 18px;
+  }
+
+  .nav-search {
+    display: none;
+  }
+
+  .nav-logo {
+    font-size: 20px;
+  }
+
+  .nav-user span,
+  .logout-btn {
+    display: none !important;
+  }
+}
+
+/* Instagram-style mobile bottom nav */
+@media (max-width: 600px) {
+  .navbar {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    height: 64px;
+    padding: 0 12px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(255, 255, 255, 0.96);
+    border-top: 1px solid #e5e7eb;
+    box-shadow: 0 -6px 24px rgba(15, 23, 42, 0.08);
+    z-index: 999;
+  }
+
+  .nav-logo,
+  .nav-search,
+  .logout-btn,
+  .nav-user span {
+    display: none !important;
+  }
+
+  .nav-actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    gap: 0;
+  }
+
+  .nav-actions button,
+  .nav-icon-btn {
+    width: 44px;
+    height: 44px;
+    background: transparent;
+  }
+
+  .nav-actions button:hover,
+  .nav-icon-btn:hover {
+    background: #f1f5f9;
+    transform: none;
+  }
+
+  .nav-avatar {
+    width: 34px;
+    height: 34px;
+  }
+
+  .notification-badge {
+    top: 2px;
+    right: 1px;
+    min-width: 16px;
+    height: 16px;
+    font-size: 10px;
+  }
+
+  body {
+    padding-bottom: 72px;
+  }
+}
