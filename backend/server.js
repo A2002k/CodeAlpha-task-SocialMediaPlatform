@@ -6,7 +6,15 @@ const path = require("path");
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://vercel.com/a2002ks-projects/code-alpha-task-social-media-platform/Hm5B7Jfa6s9mozqJfewzuzvkgXa1",
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
