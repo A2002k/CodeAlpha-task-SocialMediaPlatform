@@ -14,6 +14,9 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   const { user, setUser } = useUser();
+  const storedUser = JSON.parse(sessionStorage.getItem("user"));
+const currentUser = user || storedUser;
+const userId = currentUser?._id || currentUser?.id;
 
   const [unreadCount, setUnreadCount] = useState(0);
   const [unreadMessages, setUnreadMessages] = useState(0);
@@ -94,17 +97,19 @@ function Navbar() {
           )}
         </Link>
 
-        <Link to={`/profile/${user?._id || user?.id}`} className="nav-user">
-          <div className="nav-avatar">
-            {user?.profileImage ? (
-              <img src={user.profileImage} alt={user.name} />
-            ) : (
-              user?.name?.charAt(0)
-            )}
-          </div>
+        {userId && (
+          <Link to={`/profile/${userId}`} className="nav-user">
+            <div className="nav-avatar">
+              {currentUser?.profileImage ? (
+                <img src={currentUser.profileImage} alt={currentUser.name} />
+              ) : (
+                currentUser?.name?.charAt(0)
+              )}
+            </div>
 
-          <span>{user?.name}</span>
-        </Link>
+            <span>{currentUser?.name}</span>
+          </Link>
+        )}
 
         <button className="logout-btn" onClick={logout}>
           <LogOut size={18} />
