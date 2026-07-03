@@ -5,16 +5,19 @@ require("dotenv").config();
 const path = require("path");
 
 const app = express();
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://code-alpha-task-social-media-platfo.vercel.app"
+];
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://vercel.com/a2002ks-projects/code-alpha-task-social-media-platform/Hm5B7Jfa6s9mozqJfewzuzvkgXa1",
-    ],
+    origin: allowedOrigins,
     credentials: true,
   })
 );
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
