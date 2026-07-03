@@ -6,17 +6,21 @@ import "../css/profile.css";
 import EditProfileModal from "../../components/user/EditProfileModal";
 import { useUser } from "../context/UserContext";
 
-
-
 function Profile() {
   const { id } = useParams();
- const { user, setUser } = useUser();
+  const { user, setUser } = useUser();
+
+  const storedUser = JSON.parse(sessionStorage.getItem("user"));
+  const currentUser = user || storedUser;
+  const currentUserId = currentUser?._id || currentUser?.id;
 
   const [profile, setProfile] = useState(null);
   const [posts, setPosts] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
+    if (!id || id === "undefined") return;
+
     fetchProfile();
     fetchPosts();
   }, [id]);
@@ -33,43 +37,67 @@ function Profile() {
   const fetchPosts = async () => {
     try {
       const res = await API.get("/posts");
-      const userPosts = res.data.filter((post) => post.user?._id === id);
+
+      const userPosts = res.data.filter(
+        (post) =>
+          post.user?._id === id ||
+          post.originalPost?.user?._id === id
+      );
+
       setPosts(userPosts);
     } catch (err) {
       console.log(err.response?.data || err.message);
     }
   };
 
-  //follow/unfollow
   const toggleFollow = async () => {
-  try {
-    const res = await API.put(`/users/${profile._id}/follow`);
+    if (!currentUserId) {
+      alert("Please login again");
+      return;
+    }
 
-    setProfile({
-      ...profile,
-      followers: res.data.followingStatus
-        ? [...profile.followers, user.id]
-        : profile.followers.filter((id) => id !== user.id),
-    });
-  } catch (err) {
-    alert(err.response?.data?.message || "Error following user");
+    try {
+      const res = await API.put(`/users/${profile._id}/follow`);
+
+      setProfile({
+        ...profile,
+        followers: res.data.followingStatus
+          ? [...(profile.followers || []), currentUserId]
+          : (profile.followers || []).filter(
+              (f) => (f._id || f).toString() !== currentUserId
+            ),
+      });
+    } catch (err) {
+      alert(err.response?.data?.message || "Error following user");
+    }
+  };
+
+  const startConversation = async () => {
+    if (!profile?._id) return;
+
+    try {
+      const res = await API.post("/messages/conversation", {
+        receiverId: profile._id,
+      });
+
+      window.location.href = `/chat?conversation=${res.data._id}`;
+    } catch (err) {
+      alert(err.response?.data?.message || "Error starting chat");
+    }
+  };
+
+  if (!id || id === "undefined") {
+    return (
+      <div className="profile-page">
+        <Navbar />
+        <h2 style={{ padding: "30px" }}>Profile not found</h2>
+      </div>
+    );
   }
-};
-
-//chat 
-const startConversation = async () => {
-  try {
-    const res = await API.post("/messages/conversation", {
-      receiverId: profile._id,
-    });
-
-    window.location.href = `/chat?conversation=${res.data._id}`;
-  } catch (err) {
-    alert(err.response?.data?.message || "Error starting chat");
-  }
-};
 
   if (!profile) return <h2 style={{ padding: "30px" }}>Loading...</h2>;
+
+  const isMyProfile = currentUserId === profile._id;
 
   return (
     <div className="profile-page">
@@ -110,7 +138,7 @@ const startConversation = async () => {
               </div>
             </div>
 
-            {user?.id === profile._id || user?._id === profile._id ? (
+            {isMyProfile ? (
               <button
                 className="edit-profile-btn"
                 onClick={() => setShowEditModal(true)}
@@ -121,7 +149,7 @@ const startConversation = async () => {
               <div className="profile-actions">
                 <button className="follow-btn" onClick={toggleFollow}>
                   {profile.followers?.some(
-                    (f) => (f._id || f).toString() === (user?.id || user?._id)
+                    (f) => (f._id || f).toString() === currentUserId
                   )
                     ? "✓ Following"
                     : "+ Follow"}
@@ -132,7 +160,6 @@ const startConversation = async () => {
                 </button>
               </div>
             )}
-
           </div>
         </div>
 
@@ -144,22 +171,27 @@ const startConversation = async () => {
           ) : (
             posts.map((post) => (
               <div key={post._id} className="profile-post-item">
-                <img src={post.image} alt="post" />
+                <img
+                  src={post.originalPost?.image || post.image}
+                  alt="post"
+                />
               </div>
             ))
           )}
         </div>
       </div>
+
       {showEditModal && (
-      <EditProfileModal
-        profile={profile}
-        onClose={() => setShowEditModal(false)}
-        onProfileUpdated={(updatedProfile) => {
-          setProfile(updatedProfile);
-          setUser(updatedProfile);
-        }}
-      />
-    )}
+        <EditProfileModal
+          profile={profile}
+          onClose={() => setShowEditModal(false)}
+          onProfileUpdated={(updatedProfile) => {
+            setProfile(updatedProfile);
+            setUser(updatedProfile);
+            sessionStorage.setItem("user", JSON.stringify(updatedProfile));
+          }}
+        />
+      )}
     </div>
   );
 }
