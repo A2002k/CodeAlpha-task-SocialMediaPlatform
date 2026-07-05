@@ -57,8 +57,21 @@ router.post("/", auth, async (req, res) => {
       "name profileImage"
     );
 
-    await Conversation.findByIdAndUpdate(conversationId, {
-      updatedAt: new Date(),
+    const conversation = await Conversation.findByIdAndUpdate(
+      conversationId,
+      { updatedAt: new Date() },
+      { new: true }
+    );
+
+    const receiverId = conversation.members.find(
+      (id) => id.toString() !== req.user.id
+    );
+
+    const io = req.app.get("io");
+
+    io.to(receiverId.toString()).emit("receiveMessage", {
+      conversationId,
+      message: populatedMessage,
     });
 
     res.status(201).json(populatedMessage);
@@ -91,7 +104,7 @@ router.get("/unread/count", auth, async (req, res) => {
 // Mark messages as read in a conversation
 router.put("/:conversationId/read", auth, async (req, res) => {
   try {
-    await Message.updateMany(
+    const updated = await Message.updateMany(
       {
         conversation: req.params.conversationId,
         sender: { $ne: req.user.id },
@@ -99,10 +112,24 @@ router.put("/:conversationId/read", auth, async (req, res) => {
       },
       {
         isRead: true,
+        seenAt: new Date(),
       }
     );
 
-    res.json({ message: "Messages marked as read" });
+    const conversation = await Conversation.findById(req.params.conversationId);
+
+    const receiverId = conversation.members.find(
+      (id) => id.toString() !== req.user.id
+    );
+
+    const io = req.app.get("io");
+
+    io.to(receiverId.toString()).emit("messagesSeen", {
+      conversationId: req.params.conversationId,
+      seenAt: new Date(),
+    });
+
+    res.json({ message: "Messages marked as read", updated });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
