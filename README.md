@@ -158,6 +158,9 @@ The goal of this project is to demonstrate full-stack development skills using m
 - Push Notifications
 
 ---
+#Demo account:
+Email : user@gmail.com
+Password : 1234567
 
 # 👨‍💻 Author
 
